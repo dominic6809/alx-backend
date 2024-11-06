@@ -11,15 +11,17 @@ from flask import Flask, render_template, request, g
 
 class Config:
     """
-    Configuration class for Flask application.
-    Defines language and timezone settings for the application.
+    Represents a Flask Babel configuration.
     """
     LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_LOCALE = "en"
     BABEL_DEFAULT_TIMEZONE = "UTC"
 
 
-# Mock user table
+app = Flask(__name__)
+app.config.from_object(Config)
+app.url_map.strict_slashes = False
+babel = Babel(app)
 users = {
     1: {"name": "Balou", "locale": "fr", "timezone": "Europe/Paris"},
     2: {"name": "Beyonce", "locale": "en", "timezone": "US/Central"},
@@ -27,16 +29,10 @@ users = {
     4: {"name": "Teletubby", "locale": None, "timezone": "Europe/London"},
 }
 
-app = Flask(__name__)
-app.config.from_object(Config)
-babel = Babel(app)
-
 
 def get_user() -> Union[Dict, None]:
     """
-    Get user dictionary based on login_as URL parameter.
-    Returns:
-        Union[Dict, None]: User dictionary if found, None otherwise
+    Retrieves a user based on a user id.
     """
     login_id = request.args.get('login_as', '')
     if login_id:
@@ -47,22 +43,16 @@ def get_user() -> Union[Dict, None]:
 @app.before_request
 def before_request() -> None:
     """
-    Execute before all other functions.
-    Sets the logged in user (if any) in flask.g.user
+    Performs some routines before each request's resolution.
     """
-    g.user = get_user()
+    user = get_user()
+    g.user = user
 
 
 @babel.localeselector
 def get_locale() -> str:
     """
-    Determine the best matching language based on priority:
-    1. Locale from URL parameters
-    2. Locale from user settings
-    3. Locale from request header
-    4. Default locale
-    Returns:
-        str: Best matching language code from the supported languages
+    Retrieves the locale for a web page.
     """
     locale = request.args.get('locale', '')
     if locale in app.config["LANGUAGES"]:
@@ -75,15 +65,13 @@ def get_locale() -> str:
     return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
-@app.route('/', strict_slashes=False)
-def index() -> Any:
+@app.route('/')
+def get_index() -> str:
     """
-    Handle the root route of the application.
-    Returns:
-        str: Rendered HTML template with welcome message
+    The home/index page.
     """
     return render_template('6-index.html')
 
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="5000")
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
