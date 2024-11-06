@@ -3,11 +3,12 @@
 # This file is distributed under the same license as the PROJECT project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
 #
-msgid "home_title"
+#, fuzzy
+msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2024-11-06 11:26+0000\n"
+"POT-Creation-Date: 2024-11-06 11:34+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: fr\n"
@@ -17,3 +18,23 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.9.1\n"
+
+# French translations for PROJECT.
+# Copyright (C) 2024 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2024.
+#~ msgid "home_title"
+#~ msgstr ""
+#~ "Project-Id-Version: PROJECT VERSION\n"
+#~ "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+#~ "POT-Creation-Date: 2024-11-06 11:26+0000\n"
+#~ "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+#~ "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+#~ "Language: fr\n"
+#~ "Language-Team: fr <LL@li.org>\n"
+#~ "Plural-Forms: nplurals=2; plural=(n > 1)\n"
+#~ "MIME-Version: 1.0\n"
+#~ "Content-Type: text/plain; charset=utf-8\n"
+#~ "Content-Transfer-Encoding: 8bit\n"
+#~ "Generated-By: Babel 2.9.1\n"
+
