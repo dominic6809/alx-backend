@@ -60,7 +60,7 @@ def before_request() -> None:
 def get_locale() -> str:
     """
     Determine the best matching language based on client's preferred languages.
-    First checks for locale parameter in URL, then falls back to request headers.
+    First checks for locale parameter in URL, then falls back to request header
     Returns:
         str: Best matching language code from the supported languages
     """
@@ -68,7 +68,7 @@ def get_locale() -> str:
     locale = request.args.get('locale')
     if locale and locale in app.config['LANGUAGES']:
         return locale
-    
+
     # Fall back to default behavior (accept_languages header)
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
