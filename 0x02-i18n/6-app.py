@@ -4,9 +4,9 @@ Flask application module with Babel configuration and user handling.
 This module sets up a Flask web application with internationalization
 support using Flask-Babel and mock user authentication.
 """
+from flask_babel import Babel
+from typing import Union, Dict
 from flask import Flask, render_template, request, g
-from flask_babel import Babel, gettext
-from typing import Any, Union, Dict
 
 
 class Config:
@@ -38,12 +38,9 @@ def get_user() -> Union[Dict, None]:
     Returns:
         Union[Dict, None]: User dictionary if found, None otherwise
     """
-    login_id = request.args.get('login_as')
+    login_id = request.args.get('login_as', '')
     if login_id:
-        try:
-            return users.get(int(login_id))
-        except ValueError:
-            return None
+        return users.get(int(login_id), None)
     return None
 
 
@@ -67,23 +64,15 @@ def get_locale() -> str:
     Returns:
         str: Best matching language code from the supported languages
     """
-    # 1. Check if locale parameter is in URL
-    locale = request.args.get('locale')
-    if locale and locale in app.config['LANGUAGES']:
+    locale = request.args.get('locale', '')
+    if locale in app.config["LANGUAGES"]:
         return locale
-
-    # 2. Check user settings
-    if g.user and g.user.get('locale') in app.config['LANGUAGES']:
+    if g.user and g.user['locale'] in app.config["LANGUAGES"]:
         return g.user['locale']
-
-    # 3. Check request header
-    header_locale =
-    request.accept_languages.best_match(app.config['LANGUAGES'])
-    if header_locale:
+    header_locale = request.headers.get('locale', '')
+    if header_locale in app.config["LANGUAGES"]:
         return header_locale
-
-    # 4. Default locale
-    return app.config['BABEL_DEFAULT_LOCALE']
+    return request.accept_languages.best_match(app.config["LANGUAGES"])
 
 
 @app.route('/', strict_slashes=False)
