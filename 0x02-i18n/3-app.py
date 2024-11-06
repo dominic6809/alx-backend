@@ -5,8 +5,8 @@ This module contains a basic Flask app with Babel setup for language
 localization and timezone configuration.
 """
 
+from flask_babel import Babel
 from flask import Flask, render_template, request
-from flask_babel import Babel, _
 
 
 class Config:
@@ -18,8 +18,8 @@ class Config:
 
 app = Flask(__name__)
 app.config.from_object(Config)
-
-babel = Babel(app)
+app.url_map.strict_slashes = False
+babel = Babel(app))
 
 
 @babel.localeselector
